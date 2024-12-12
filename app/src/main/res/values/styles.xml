@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Created by Andréa Fonsêca on 2024, see LICENSE file for details.-->
+<resources>
+    <style name="TextInputLayoutBoxCustom" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="endIconTint">@color/primary</item>
+        <item name="boxBackgroundColor">@color/light_primary</item>
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxStrokeColor">@color/primary</item>
+        <item name="placeholderTextColor">@color/gray</item>
+    </style>
+
+    <style name="Button_Custom">
+        <item name="cornerSize">15%</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="boxBackgroundColor">@color/primary</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="standart_txt">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="lineHeight">18sp</item>
+    </style>
+
+    <style name="highlight_txt">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="lineHeight">18sp</item>
+    </style>
+</resources>
