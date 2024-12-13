@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">ChegaAi</string>
-    <string name="calculate_cost">Calcular Valor</string>
+    <string name="btn_calculate_cost">Calcular Valor</string>
+    <string name="btn_choose_driver">Escolher</string>
     <string name="destination_address">Digite o endereço de destino</string>
     <string name="error_message">Seu código é necessário, pois criamos um histórico das viagens</string>
     <string name="error_user_id">Erro: %s</string>
@@ -8,7 +9,9 @@
     <string name="invalid_address_origin">Preencha com o endereço da partida.</string>
     <string name="invalid_address_destinaation">Preencha com o endereço do destino.</string>
     <string name="loading">Carregando… \nAguarde enquanto buscamos todos os detalhes!.</string>
+    <string name="map_description">Mapa da viagem.</string>
     <string name="origin_address">Digite o endereço de partida</string>
     <string name="ride_cost">Custo da viagem: R$ %.2f</string>
     <string name="user_id">Digite sua identificação</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

@@ -8,11 +8,11 @@ import androidx.activity.viewModels
 import com.aaf.chegaai.databinding.ActivityRideRequestBinding
 import androidx.appcompat.app.AppCompatActivity
 import com.aaf.chegaai.R
-import com.aaf.chegaai.domain.model.RideEstimateRequest
-import com.aaf.chegaai.domain.usecase.ValidationResult
 import com.aaf.chegaai.presentation.viewmodel.RideRequestViewModel
 import com.aaf.chegaai.utils.LoadAlert
 import com.aaf.chegaai.utils.RideResult
+import com.aaf.chegaai.utils.goToWithExtras
+import com.aaf.chegaai.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,64 +20,79 @@ class RideRequestActivity : AppCompatActivity() {
 
     private val binding by lazy{ ActivityRideRequestBinding.inflate(layoutInflater) }
     private val rideRequestViewModel: RideRequestViewModel by viewModels()
-    private val validationFields: RideRequestViewModel by viewModels()
     private val loadAlert by lazy{ LoadAlert(this)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        Log.i("API RideRequestActivity", "Activity started successfully")
-        inits()
 
-        Log.i("API RideRequestActivity", "Final da onCreate")
+        inits()
     }
 
     private fun inits() {
         initsObserver()
-
+        initClickEvent()
     }
 
     private fun initsObserver() {
-        rideRequestViewModel.rideEstimate.observe(this) { result ->
-            when (result) {
-                is RideResult.Loading -> {
-                   loadAlert.showLoad(getString(R.string.loading))
-                }
-                is RideResult.Success -> {
-                    loadAlert.close()
-                    val estimate = result.data
-                    if (estimate != null){
-                        binding.tvCost.text =  estimate.toString()
-                        Log.i("API RideRequestActivity", "Estimativa recebida: $estimate")
-
-                        val intent = Intent(this, RideOptionsActivity::class.java).apply {
-                            putExtra("RIDE_ESTIMATE", estimate)
-                        }
-                        startActivity(intent)
-                        //showRideOptions(estimate)
-                    } else{
-                        loadAlert.close()
-                        Toast.makeText(this, "Dados da estimativa estão vazios", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                is RideResult.Error -> {
-                    loadAlert.close()
-                    loadAlert.showLoad(result.errorDescription)
-                    Log.e("API RideRequestActivity", "Erro: ${result.errorDescription}")
-                }
+        // Observa os resultados da validação
+        rideRequestViewModel.validationResult.observe(this) { validation ->
+            with(binding) {
+                // Atualiza os erros no TextInputLayout com base na validação
+                tilUserId.error = if (validation.customerId) null else getString(R.string.invalid_user_id)
+                tilOrigin.error = if (validation.origin) null else getString(R.string.invalid_address_origin)
+                tilDestination.error = if (validation.destination) null else getString(R.string.invalid_address_destinaation)
             }
         }
 
-        binding.btCost.setOnClickListener {
-
-                val userId      = binding.tieUserId.text.toString()
-                val origin      = binding.tieOrigin.text.toString()
+        rideRequestViewModel.isFormValid.observe(this) { isValid ->
+            if (isValid) {
+                val userId = binding.tieUserId.text.toString()
+                val origin = binding.tieOrigin.text.toString()
                 val destination = binding.tieDestination.text.toString()
 
-            if (userId.isBlank() || origin.isBlank() || destination.isBlank()) {
-                Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
+                // Envia a requisição
+                rideRequestViewModel.fetchRideEstimateIfValid(userId, origin, destination)
             } else {
-                rideRequestViewModel.fetchRideEstimate(userId, origin, destination)
+                Toast.makeText(this, "Preencha todos os campos corretamente!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        rideRequestViewModel.rideEstimate.observe(this) { result ->
+            when (result) {
+                is RideResult.Loading -> loadAlert.showLoad(getString(R.string.loading))
+                is RideResult.Success -> {
+                    loadAlert.close()
+                    val estimate = result.data
+                    Log.i("API RideRequestActivity", "Estimativa recebida: $estimate")
+
+                    val bundle = Bundle().apply {
+                        putParcelable("rideEstimate", estimate)
+                    }
+                    goToWithExtras(RideOptionsActivity::class.java, extras = bundle)
+                   /* val intent = Intent(this, RideOptionsActivity::class.java)
+                    intent.putExtra("rideEstimate", estimate)
+                    startActivity(intent)*/
+                }
+                is RideResult.Error ->  loadAlert.close()
+            }
+        }
+    }
+
+    private fun initClickEvent() {
+        with(binding){
+            btnCost.setOnClickListener { view ->
+
+                view.hideKeyboard()
+                tilUserId.clearFocus()
+                tilOrigin.clearFocus()
+                tilDestination.clearFocus()
+
+                val userId      = tieUserId.text.toString()
+                val origin      = tieOrigin.text.toString()
+                val destination = tieDestination.text.toString()
+
+                rideRequestViewModel.validateAndProceed(userId, origin, destination)
             }
         }
     }

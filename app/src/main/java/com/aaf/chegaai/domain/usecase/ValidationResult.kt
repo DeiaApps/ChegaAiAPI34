@@ -5,6 +5,8 @@ package com.aaf.chegaai.domain.usecase
  * Licensed under the MIT License.
  * See LICENSE file for details.
  **/
+import kotlinx.parcelize.Parcelize
+import android.os.Parcelable
 
 data class ValidationResult (
     var customerId: Boolean = false,

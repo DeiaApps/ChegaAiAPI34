@@ -1,19 +1,18 @@
 package com.aaf.chegaai.utils
-
-import android.app.AlertDialog
-import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.ProgressBar
-import android.widget.TextView
-import com.aaf.chegaai.R
-
 /**
  * Created by Andréa Fonsêca on 09/12/2024
  * Copyright (c) 2024 Andréa A. Fonsêca
  * Licensed under the MIT License.
  * See LICENSE file for details.
  **/
+
+import android.app.AlertDialog
+import android.content.Context
+import android.view.View
+import android.widget.ProgressBar
+import android.widget.TextView
+import com.aaf.chegaai.R
+
 
 class LoadAlert (private val context: Context) {
 

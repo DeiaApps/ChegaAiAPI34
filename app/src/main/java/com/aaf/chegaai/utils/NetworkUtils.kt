@@ -1,8 +1,4 @@
 package com.aaf.chegaai.utils
-
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
-
 /**
  * Created by Andréa Fonsêca on 10/12/2024
  * Copyright (c) 2024 Andréa A. Fonsêca
@@ -10,13 +6,37 @@ import com.google.gson.JsonParser
  * See LICENSE file for details.
  **/
 
-fun parseErrorJson(errorBody: String?): JsonObject? {
-    return try {
-        errorBody?.let {
-            val jsonElement = JsonParser.parseString(it)
-            if (jsonElement.isJsonObject) jsonElement.asJsonObject else null
-        }
-    } catch (e: Exception) {
-        null
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+
+fun View.hideKeyboard(){
+    val inputMethodManager = context
+        .getSystemService( Context.INPUT_METHOD_SERVICE ) as InputMethodManager
+
+    inputMethodManager.hideSoftInputFromWindow(
+        windowToken,0
+    )
+}
+
+fun <T>Activity.goTo(destination: Class<T>, finalizeActivity: Boolean = true){
+    startActivity(
+        Intent(this, destination)
+    )
+    if (finalizeActivity) finish()
+}
+
+fun <T> Activity.goToWithExtras(
+    destination: Class<T>,
+    extras: Bundle? = null,
+    finalizeActivity: Boolean = true
+) {
+    val intent = Intent(this, destination).apply {
+        extras?.let { putExtras(it) }
     }
+    startActivity(intent)
+    if (finalizeActivity) finish()
 }

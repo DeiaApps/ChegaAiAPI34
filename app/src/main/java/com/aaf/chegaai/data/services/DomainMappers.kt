@@ -7,8 +7,12 @@ package com.aaf.chegaai.data.services
  **/
 
 import com.aaf.chegaai.data.model.Option
+import com.aaf.chegaai.data.model.PATCH.DriverDTO
+import com.aaf.chegaai.data.model.PATCH.RideConfirmRequestDTO
 import com.aaf.chegaai.data.model.RideEstimateDTO
 import com.aaf.chegaai.data.model.RideEstimateRequestDTO
+import com.aaf.chegaai.domain.model.Driver
+import com.aaf.chegaai.domain.model.RideConfirmation
 import com.aaf.chegaai.domain.model.RideEstimate
 import com.aaf.chegaai.domain.model.RideEstimateRequest
 import com.aaf.chegaai.domain.model.RideOption
@@ -19,6 +23,13 @@ fun RideEstimateRequestDTO.toDomain(): RideEstimateRequest{
         customerId = this.customer_id,
         origin = this.origin,
         destination = this.destination,
+    )
+}
+
+fun DriverDTO.toDomain(): Driver{
+    return Driver(
+        id = this.id,
+        name = this.name
     )
 }
 

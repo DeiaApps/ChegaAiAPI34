@@ -5,6 +5,7 @@ package com.aaf.chegaai.di
  * Licensed under the MIT License.
  * See LICENSE file for details.
  **/
+
 import com.aaf.chegaai.data.repository.RideRepositoryImpl
 import com.aaf.chegaai.data.services.IRideAPI
 import com.aaf.chegaai.domain.repository.IRideRepository

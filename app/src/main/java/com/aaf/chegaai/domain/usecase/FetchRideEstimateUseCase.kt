@@ -13,7 +13,6 @@ import com.aaf.chegaai.utils.RideResult
 import javax.inject.Inject
 
 
-
 class FetchRideEstimateUseCase @Inject constructor(
     private val repository: IRideRepository
 ){

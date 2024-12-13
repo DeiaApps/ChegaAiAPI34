@@ -1,14 +1,13 @@
 package com.aaf.chegaai.utils
-
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
-
 /**
  * Created by Andréa Fonsêca on 09/12/2024
  * Copyright (c) 2024 Andréa A. Fonsêca
  * Licensed under the MIT License.
  * See LICENSE file for details.
  **/
+
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 
 object ErrorMessages {
     private val errorMap = mapOf(

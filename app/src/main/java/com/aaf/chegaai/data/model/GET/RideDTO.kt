@@ -1,8 +1,8 @@
 package com.aaf.chegaai.data.model.GET
 
 //import com.aaf.chegaai.domain.model.Ride
-
-/*data class RideDTO(
+/*
+data class RideDTO(
     val date: String,
     val destination: String,
     val distance: Double,

@@ -1,4 +1,10 @@
 package com.aaf.chegaai.utils
+/**
+ * Created by Andréa Fonsêca on 11/12/2024
+ * Copyright (c) 2024 Andréa A. Fonsêca
+ * Licensed under the MIT License.
+ * See LICENSE file for details.
+ **/
 
 import android.app.Activity
 import android.view.Gravity
@@ -7,13 +13,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-
-/**
- * Created by Andréa Fonsêca on 11/12/2024
- * Copyright (c) 2024 Andréa A. Fonsêca
- * Licensed under the MIT License.
- * See LICENSE file for details.
- **/
 
 fun Activity.displayMessage(txtMessage: String ){
     val toast = Toast.makeText(this, txtMessage, Toast.LENGTH_SHORT)
